@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>翻转字符串</title>
+    <style>
+        pre {
+            color: #333;
+            font-weight: 700;
+            font-family: Courier New, Courier, monospace
+        }
+
+        li {
+            font-family: 'Microsoft Yaei';
+        }
+    </style>
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <pre>
+function reverseString(str) {
+    var strArr = str.split('');
+    var reversedArr = strArr.reverse();
+    return reversedArr.join('');
+} 
+    </pre>
+    <h1>优化思路</h1>
+    <pre>
+function reverseString(str) {
+    return str.split('').reverse().join('');
+}        
+    </pre>
+    <ul>
+        <li>.split 返回分割后的数组，因此可以直接调用 .reverse</li>
+        <li>.reverse() 方法返回的是翻转后的数组，因此可以直接调用 .join</li>
+    </ul>
+    <h1>提高思路</h1>
+    <pre>
+function reverseString(str) {
+    var result = "";
+    for (var i = str.length - 1; i >= 0; i--) {
+        result += str[i];
+    }
+    return result;
+}
+    </pre>
+    <h1>高级解法【递归】</h1>
+    <pre>
+function reverseString(str) {
+    // 设置递归终点(弹出条件)
+    if (str.length === 1) {
+        return str;
+    }
+    else {
+        // 递归调用
+        return reverseString(str.substr(1)) + str[0];
+    }
+}
+    </pre>
+</body>
+
+</html>
