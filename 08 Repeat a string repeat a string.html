@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>重复输出字符串</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <pre>
+function repeat(str, num) {
+    var result = "";
+    for (var i = 0; i < num; i++) {
+        result += str;
+    }
+    return result;
+}
+    </pre>
+    <h1>优化思路</h1>
+    <pre>
+function repeat(str, num) {
+    var result = "";
+    while (num > 0) {
+        result += str;
+        num--;
+    }
+    return result;
+}
+    </pre>
+    <h1>使用repeat()</h1>
+    <pre>
+function repeat(str, num) {
+    return num > 0 ? str.repeat(num) : "";
+}
+    </pre>
+    <h1>使用join()</h1>
+    <pre>
+function repeat(str, num) {
+    if (num > 0) {
+        return Array(num + 1).join(str);
+    }
+    return "";
+}   
+    </pre>
+    <a href="http://singsing.io/blog/fcc/basic-repeat-a-string-repeat-a-string/">重复输出字符串</a>
+</body>
+
+</html>
