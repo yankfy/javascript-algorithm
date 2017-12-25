@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>检查字符串结尾</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <ul>
+        <li>slice</li>
+        <li>substr</li>
+        <li>substring</li>
+    </ul>
+    <pre>
+function confirmEnding(str, target) {
+    // 计算出开始的索引
+    var startIndex = str.length - target.length;
+    // 从开始索引，一直截取到字符串终点
+    var strEnd = str.slice(startIndex);
+    return strEnd === target;
+}
+    </pre>
+    <h1>优化思路</h1>
+    <pre>
+function confirmEnding(str, target) {
+    return str.slice(-target.length) === target;
+}
+    </pre>
+    <h1>利用正则来解决</h1>
+    <pre>
+function confirmEnding(str, target) {
+    return RegExp(target + '$').test(str);
+}
+    </pre>
+    <a href="http://singsing.io/blog/fcc/basic-confirm-the-ending/">检查字符串结尾</a>
+</body>
+
+</html>
