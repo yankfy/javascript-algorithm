@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>找出最长单词</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <pre>
+function findLongestWord(str) {
+    // 按照空格分割字符串，生成数组
+    var strArr = str.split(" ");
+    // 初始化 length 为 0
+    var length = 0;
+    for (var i = 0; i < strArr.length; i++) {
+        // 遍历过程中，若当前字符串长度比 length 大，就更新 length
+        if (strArr[i].length > length) {
+            length = strArr[i].length;
+        }
+        // 不需要 else，因为如果比 length 小，继续执行遍历就可以了
+    }
+    
+    // 循环结束，返回 length 作为结果
+    return length;
+}
+    </pre>
+    <h1>优化思路</h1>
+    <ul>
+        <li>关于 reduce，一句话概括，就是：遍历数组，把上一次计算的结果用于下次计算</li>
+    </ul>
+    <pre>
+function findLongestWord(str) {
+    var stringArr = str.split(" ");
+    return stringArr.reduce(function (prev, next) {
+        // 返回值为参数与当前字符串中较大的数
+        // 返回值会作为下次计算的 prev 传入
+        return Math.max(prev, next.length);
+    }, 0)
+}   
+    </pre>
+    <h1>再优化</h1>
+    <ul>
+        <li>map():返回等长度的，经过处理后的数组</li>
+    </ul>
+    <pre>
+function findLongestWord(str) {
+    return Math.max.apply(null, str.split(" ").map(function (e) {
+        return e.length;
+    }))
+}
+    </pre>
+    <h1>再优化递归</h1>
+    <pre>
+function findLongestWord(str) {
+    // 分割字符串
+    var stringArr = str.split(" ");
+    // 边界值及递归跳出条件
+    if (stringArr.length === 1) {
+        return stringArr[0].length;
+    }
+    // 比较数组中第一个元素(字符串)与第二个元素(字符串)的长度
+    if (stringArr[0].length >= stringArr[1].length) {
+        // 如果第一个元素比第二个长
+        // 把第二个元素删掉
+        stringArr.splice(1, 1);
+        // 由于 findLongestWord 接收字符串为参数，因此需要用空格 join
+        return findLongestWord(stringArr.join(" "));
+    }
+    if (stringArr[0].length < stringArr[1].length) {
+        // 如果第一个元素比第二个元素短
+        // 忽略第一个元素，从第二个开始 `join`
+        return findLongestWord(stringArr.slice(1).join(" "));
+    }
+}
+    </pre>
+    <a href="http://singsing.io/blog/fcc/basic-find-the-longest-word-in-a-string/">找出最长单词</a>
+</body>
+
+</html>
