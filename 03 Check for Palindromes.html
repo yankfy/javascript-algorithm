@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>翻转字符串</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <ul>
+        <li>正则：需要忽略空格和特殊符号的影响，只考虑数字和字母部分 /[^A-Za-z0-9]/g </li>
+    </ul>
+    <pre>
+function palindrome (str) {
+    // 转换成小写
+    var lowerStr = str.toLowerCase();
+    // 替换掉干扰项
+    var replacedStr = lowerStr.replace(/[^a-z0-9]/g, "");
+    // 分割成数组
+    var strArr = replacedStr.split("");
+    // 翻转数组
+    var reversedArr = strArr.reverse();
+    // 合并成字符
+    var reversedStr = reversedArr.join("");
+    // 返回判断结果
+    return replacedStr === reversedStr;
+}
+    </pre>
+    <h1>优化思路</h1>
+    <pre>
+function palindrome (str) {
+    // 边界判断
+    if (str.length === 1) {
+        return true;
+    }
+    var replacedStr = str.toLowerCase().replace(/[^a-z0-9]/g, "");
+    var reversedStr = replacedStr.split("").reverse().join("");
+    return replacedStr === reversedStr;
+}   
+    </pre>
+    <h1>提高思路</h1>
+    <pre>
+function palindrome(str) {
+    if (str.length === 1) {
+        return true;
+    }
+    var replacedStr = str.toLowerCase().replace(/[^a-z0-9]/g, "");
+    // 双指针 i 与 j，用来代表当前判断位置的索引
+    for (var i = 0, j = replacedStr.length - 1; i < replacedStr.length / 2; i++,j--) {
+        // 如果检测到了不相同
+        if (replacedStr[i] !== replacedStr[j]) {
+            // 直接跳出判断，返回 false
+            return false
+        }
+    }
+    // 所有的都判断完了，没有不相同的，返回 true
+    return true;
+}
+    </pre>
+    <h1>优化递归解法</h1>
+    <pre>
+function palindrome(str) {
+    // 排除干扰项
+    str = str.toLowerCase().replace(/[^a-z0-9]/g, '');
+    // 设置边界条件
+    if (str.length < 2) {
+        return true;
+    }
+    // 检测首尾是否相等不相等，如果不等就直接返回 false
+    if (str[0] !== str[str.length - 1]) {
+        return false;
+    }
+    // 递归调用
+    return palindrome(str.slice(1, -1));
+}
+    </pre>
+</body>
+
+</html>
