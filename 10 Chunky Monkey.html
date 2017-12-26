@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>猴子吃香蕉, 分割数组</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <pre>
+function chunk(arr, size) {
+    // 这个数组用于存储结果
+    var result = [];
+    for (var i = 0; i < arr.length; i += size) {
+        // 这个数组用于存储临时的数组片段
+        var temp = [];
+        for (var j = i; j < i + size; j++) {
+            // 判断边界。可以思考一下，为什么不能写成 if (arr[j])
+            if (j < arr.length) {
+                temp.push(arr[j]);
+            }
+        }
+        result.push(temp);
+    }
+    return result;
+}
+    </pre>
+    <script>
+        function chunk(arr, size) {
+            // 这个数组用于存储结果
+            var result = [];
+            for (var i = 0; i < arr.length; i += size) {
+                // 这个数组用于存储临时的数组片段
+                var temp = [];
+                for (var j = i; j < i + size; j++) {
+                    // 判断边界。可以思考一下，为什么不能写成 if (arr[j])
+                    console.log(j)
+                    if (j < arr.length) {
+                        temp.push(arr[j]);
+                    }
+                }
+                console.log(temp)
+                result.push(temp);
+            }
+            return result;
+        }
+        chunk(["a", "b", "c", "d"], 2);
+    </script>
+    <h1>优化思路</h1>
+    <pre>
+function chunk(arr, size) {
+    var result = [];
+    // 设置起点
+    var i = 0;
+    while (i < arr.length) {
+        result.push(arr.slice(i, i + size));
+        i += size;
+    }
+    return result;
+}
+    </pre>
+    <h1>使用splice，splice是为数不多的会直接改变原数组的数组方法</h1>
+    <pre>
+function chunk(arr, size) {
+    var result = [];
+    while (arr.length) {
+        result.push(arr.splice(0, size));
+    }
+}       
+    </pre>
+    <a href="http://singsing.io/blog/fcc/basic-chunky-monkey/">猴子吃香蕉, 分割数组</a>
+</body>
+
+</html>
