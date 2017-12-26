@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>摧毁数组</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>遍历数组，使用 splice 方法</h1>
+    <pre>
+
+    </pre>
+    <script>
+        function destroyer(arr) {
+            var arg = [].slice.apply(arguments)
+            var sourceArr = arg[0]
+            var refArr = arg.slice(1)
+
+            for (var i = sourceArr.length - 1; i >= 0; i--) {
+                if (refArr.indexOf(sourceArr[i]) > -1) {
+                    sourceArr.splice(i, 1)
+                }
+            }
+
+            return sourceArr
+        }
+    </script>
+    <h1>优化思路 使用filter</h1>
+    <pre>
+function destroyer(arr) {
+    var sourceArr = arguments[0];
+    var refArr = [].slice.call(arguments, 1);
+    return sourceArr.filter(function (e) {
+        return refArr.indexOf(e) === -1;
+    })
+}
+    </pre>
+    <h1>一行搞定 - 使用reduce</h1>
+    <pre>
+<!-- ES5 -->
+function destroyer(arr) {
+    return [].slice.call(arguments).reduce(function (prev, next) {
+        return prev.filter(function (e) {
+            return e !== next;
+        });
+    });
+}
+<!-- ES6 -->
+function destroyer(arr) {
+    return [].slice.call(arguments).reduce(function (prev, next) {
+        return prev.filter(function (e) {
+            return e !== next;
+        });
+    });
+}
+    </pre>
+    <script>
+        function destroyer(arr) {
+            return [].slice.call(arguments).reduce((prev, next) => {
+                return prev.filter((e) => {
+                    return e != next
+                })
+            })
+        }
+        console.log(destroyer([1, 2, 3, 1, 2, 3], 2, 3))
+    </script>
+    <h1></h1>
+    <pre>
+
+    </pre>
+    <a href="http://singsing.io/blog/fcc/basic-seek-and-destroy/">摧毁数组</a>
+</body>
+
+</html>

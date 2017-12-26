@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组排序并找出元素索引</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <pre>
+function where(arr, num) {
+    arr.push(num);
+    
+    arr.sort(function(a, b) {
+        return a - b;
+    });
+    return arr.indexOf(num);
+}
+    </pre>
+    <h1>优化思路</h1>
+    <ul>
+        <li>如果有 n 个数比 num 小，那我们直接返回 n 就可以了</li>
+    </ul>
+    <pre>
+function where(arr, num) {
+    var count = 0;
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] < num) {
+            count += 1;
+        }
+    }
+    return count;
+}
+    </pre>
+    <h1>一行搞定 使用filter</h1>
+    <pre>
+function where(arr, num) {
+    return arr.filter(function (e) {
+        return e < num;
+    }).length;
+}
+
+<!-- ES6 -->
+function where(arr, num) {
+    return arr.filter(e => e < num).length;
+}
+    </pre>
+    <h1></h1>
+    <pre>
+
+    </pre>
+    <a href="http://singsing.io/blog/fcc/basic-where-do-i-belong/">数组排序并找出元素索引</a>
+</body>
+
+</html>
