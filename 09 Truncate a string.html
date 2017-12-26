@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>截断字符串</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <pre>
+function truncate(str, num) {
+    if (str.length > num) {
+        if (num > 3) {
+            // num 大于 3，因此要少截三位，留出 ... 的位置
+            return str.substr(0, num - 3) + '...';
+        } else {
+            // num 小于 3，正常截取，并把 ... 补到后面
+            return str.substr(0, num) + '...';
+        }
+    } else {
+        // num 比字符串长度大
+        return str;
+    }
+}
+    </pre>
+    <h1>优化思路</h1>
+    <pre>
+function truncate(str, num) {
+    if (str.length > num) {
+        return str.substr(0, num > 3 ? num - 3 : num) + '...';
+    }
+    return str;
+}
+    </pre>
+    <h1></h1>
+    <pre>
+
+    </pre>
+    <h1></h1>
+    <pre>
+
+    </pre>
+    <a href="http://singsing.io/blog/fcc/basic-truncate-a-string/">截断字符串</a>
+</body>
+
+</html>
