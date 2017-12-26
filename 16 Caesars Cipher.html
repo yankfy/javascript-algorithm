@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>凯撒密码</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <pre>
+function rot13(str) {
+    var result = "";
+    for (var i = 0; i < str.length; i++) {
+        var currentCode = str[i].charCodeAt();
+        if (currentCode > 90 || currentCode < 65) {
+            // 非大写字符
+            result += String.fromCharCode(currentCode);
+        } else if (currentCode < 78) {
+            // 大写字符 A - M
+            result += String.fromCharCode(currentCode + 13);
+        } else {
+            // 大写字符 N - Z
+            result += String.fromCharCode(currentCode - 13);
+        }
+    }
+    return result;
+}
+    </pre>
+    <h1>优化思路</h1>
+    <pre>
+function rot13(str) {
+    var result = "";
+    
+    for (var i = 0; i < str.length; i++) {
+        if (/[A-Z]/.test(str[i])) {
+            result += String.fromCharCode(str[i].charCodeAt() % 26 + 65);
+        } else {
+            result += str[i];
+        }
+    }
+    return result;
+}
+    </pre>
+    <h1>一行搞定 - 使用replace</h1>
+    <pre>
+<!-- ES5 -->
+function rot13(str) {
+    return str.replace(/[A-Z]/g, function (char) {
+        return String.fromCharCode(char.charCodeAt() % 26 + 65);
+    })
+}
+<!-- ES6 -->
+function rot13(str) {
+    return str.replace(/[A-Z]/g, char => String.fromCharCode(char.charCodeAt() % 26 + 65));
+}
+    </pre>
+    <h1></h1>
+    <pre>
+
+    </pre>
+    <a href="http://singsing.io/blog/fcc/basic-caesars-cipher/">凯撒密码</a>
+</body>
+
+</html>
