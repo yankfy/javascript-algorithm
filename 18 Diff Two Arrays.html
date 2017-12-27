@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>比较两数组差异</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <pre>
+function diff(arr1, arr2) {
+    // 这个数组用于存储结果
+    var result = [];
+    // 在 arr1 中找出不存在于 arr2 的元素
+    for (var i = 0; i < arr1.length; i++) {
+        if (arr2.indexOf(arr1[i]) === -1) {
+            result.push(arr1[i]);
+        }
+    }
+    // 在 arr2 中找出不存在于 arr1 的元素
+    for (var j = 0; j < arr2.length; j++) {
+        if (arr1.indexOf(arr2[j]) === -1) {
+            result.push(arr2[j]);
+        }
+    }
+    return result;
+}
+    </pre>
+    <h1>优化思路 将循环封装</h1>
+    <pre>
+function diff(arr1, arr2) {
+    // 用 firstArr 和 secondArr 来表示传入的参数，均为数组
+    function getDiff (firstArr, secondArr) {
+        // 设置一个变量用于暂存结果
+        var result = [];
+        // 逻辑思路是，遍历 firstArr，然后与 secondArr 比较
+        for (var i = 0; i< firstArr.length; i++) {
+            if (secondArr.indexOf(firstArr[i]) === -1) {
+                result.push(firstArr[i]);
+            }
+        }
+        // 这个 result 并不是最终的结果。我们需要对传入的参数操作两次，然后把两次的结果合并起来
+        return result;
+    }
+    return getDiff(arr1, arr2).concat(getDiff(arr2, arr1));
+}
+    </pre>
+    <h1></h1>
+    <pre>
+function diff(arr1, arr2) {
+    return arr1.filter(e => arr2.indexOf(e) === -1).concat(
+        arr2.filter(e => arr1.indexOf(e) === -1)
+    );
+}
+    </pre>
+    <h1>先合并，再过滤</h1>
+    <pre>
+function diff(arr1, arr2) {
+    return arr1.concat(arr2).filter(e => arr1.indexOf(e) === -1 || arr2.indexOf(e) === -1);
+}
+    </pre>
+    <a href="http://singsing.io/blog/fcc/intermediate-diff-two-arrays/">比较两数组差异</a>
+</body>
+
+</html>
