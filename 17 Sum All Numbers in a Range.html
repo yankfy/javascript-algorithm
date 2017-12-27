@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>给定范围内的数字总和</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <pre>
+function sumAll(arr) {
+    // 用 left 代表较小的数，right 代表较大的数
+    var left, right;
+    var sum = 0;
+    if (arr[0] < arr[1]) {
+        left = arr[0];
+        right = arr[1];
+    } else {
+        left = arr[1];
+        right = arr[0];
+    }
+    for (var i = left; i <= right; i++) {
+        sum += i;
+    }
+    return sum;
+}
+    </pre>
+    <h1>优化思路 等差數列</h1>
+    <pre>
+function sumAll(arr) {
+    var left = Math.min.apply(null, arr);
+    var right = Math.max.apply(null, arr);
+    return (left + right) * (right - left + 1) / 2;
+}
+    </pre>
+    <h1>优化 使用数组方法</h1>
+    <pre>
+function sumAll(arr) {
+    var left = Math.min.apply(null, arr);
+    var right = Math.max.apply(null, arr);
+    var numArr = [];
+    for (var i = left; i <= right; i++) {
+        numArr.push(i);
+    }
+    return numArr.reduce(function(prev, next) {
+        return prev + next;
+    })
+}
+    </pre>
+    <h1>优化 使用Array.from</h1>
+    <pre>
+<!-- ES6 -->
+<!-- 下划线 _ 只是一种习惯写法，表示回调函数中不需要调用的参数。 -->
+function sumAll(arr) {
+    var numArr = Array.from({
+            length: Math.abs(arr[0] - arr[1]) + 1
+        }, (_, i) => 
+            return i + Math.min.apply(null, arr)
+    )
+    return numArr.reduce((prev, next) => prev + next);
+}
+    </pre>
+    <script>
+        function sumAll(arr) {
+            var numArr = Array.from({
+                    length: Math.abs(arr[0] - arr[1]) + 1
+                }, (_, i) => {
+                    // console.log(i,arr)
+                    return i + Math.min.apply(null, arr)
+                }
+
+            )
+            console.log(numArr)
+        }
+        console.log(sumAll([1, 4]))
+    </script>
+    <a href="http://singsing.io/blog/fcc/intermediate-sum-all-numbers-in-a-range/">给定范围内的数字总和</a>
+</body>
+
+</html>
