@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>找出对象包含的特定键值对</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <pre>
+function where(collection, source) {
+    var result = []
+    for (var i = 0; i < collection.length; i++) {
+        var flag = true
+        for (var key in source) {
+            if (collection[i][key] !== source[key]) {
+                flag = false;
+            }
+        }
+        if (flag) {
+            result.push(collection[i]);
+        }
+    }
+
+    return result
+}
+    </pre>
+    <script>
+        function where(collection, source) {
+            var result = []
+            for (var i = 0; i < collection.length; i++) {
+                var flag = true
+                for (var key in source) {
+                    if (collection[i][key] !== source[key]) {
+                        flag = false;
+                    }
+                }
+                if (flag) {
+                    result.push(collection[i]);
+                }
+            }
+
+            return result
+        }
+    </script>
+    <h1>优化思路</h1>
+    <pre>
+function where(collection, source) {
+    var result = []
+
+    function checkPush(obj) {
+        for (var key in source) {
+            if (obj[key] !== source[key]) {
+                return false
+            }
+        }
+        return true
+    }
+
+    for (var i = 0; i < collection.length; i++) {
+        if (checkPush(collection[i])) {
+            result.push(collection[i])
+        }
+    }
+    return result
+}
+    </pre>
+    <script>
+        function where(collection, source) {
+            var result = []
+
+            function checkPush(obj) {
+                for (var key in source) {
+                    if (obj[key] !== source[key]) {
+                        return false
+                    }
+                }
+                return true
+            }
+
+            for (var i = 0; i < collection.length; i++) {
+                if (checkPush(collection[i])) {
+                    result.push(collection[i])
+                }
+            }
+            return result
+        }
+    </script>
+    <h1>优化 使用filter</h1>
+    <pre>
+function where(collection, source) {
+    var keys = Object.keys(source)
+
+    return collection.filter(e => {
+        return keys.map(key => {
+            return e[key] === source[key]
+        }).reduce((prev, next) => {
+            return prev && next
+        },true)
+    })
+}
+    </pre>
+    <script>
+        function where(collection, source) {
+            var keys = Object.keys(source)
+
+            return collection.filter(e => {
+                return keys.map(key => {
+                    return e[key] === source[key]
+                }).reduce((prev, next) => {
+                    return prev && next
+                }, true)
+            })
+        }
+    </script>
+    <h1>使用一行搞定</h1>
+    <ul>
+        <li>every() 方法测试数组的所有元素是否都通过了指定函数的测试。</li>
+    </ul>
+    <pre>
+function where(collection, source) {
+    return collection.filter(e => Object.keys(source).every(key => e[key] === source[key]))
+}
+    </pre>
+    <script>
+        function where(collection, source) {
+            return collection.filter(e => Object.keys(source).every(key => e[key] === source[key]))
+        }
+    </script>
+    <a href="http://singsing.io/blog/fcc/intermediate-where-art-thou/">找出对象包含的特定键值对</a>
+</body>
+
+</html>
