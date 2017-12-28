@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>罗马数字转换器 </title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>基本思路</h1>
+    <pre>
+
+    </pre>
+    <script>
+        function convert(num) {
+            var numArr = [1, 5, 10, 50, 100, 500, 1000] // 7
+            var strArr = ["I", "V", "X", "L", "C", "D", "M"]
+            var result = ''
+            while (num > 0) {
+                var i = numArr.length
+                while (i >= 0) {
+                    if (num >= numArr[i]) {
+                        var checkerIndex = [i + 1, i % 2 ? i - 1 : i]
+                        var checkNum = numArr[checkerIndex[0]] - numArr[checkerIndex[1]]
+                        if (i < 6 && num >= checkNum) {
+                            result += strArr[checkerIndex[1]] + strArr[checkerIndex[0]]
+                            num -= checkerNum
+                        } else {
+                            result += strArr[i]
+                            num -= numArr[i]
+                        }
+                    } else {
+                        i--
+                    }
+                }
+            }
+            return result
+        }
+    </script>
+    <h1>优化思路</h1>
+    <pre>
+function convert(num) {
+    var numArr = [1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000];
+    var strArr = ["I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"];
+    var result = "";
+    while (num > 0) {
+        var i = numArr.length;
+        while (i >= 0) {
+            if (num >= numArr[i]) {
+                result += strArr[i];
+                num -= numArr[i];
+            } else {
+                i--;
+            }
+        }
+    }
+    return result;
+}
+    </pre>
+    <h1>优化 使用递归函数</h1>
+    <pre>
+function convert(num) {
+    var numArr = [1, 5, 10, 50, 100, 500, 1000];
+    var strArr = ["I", "V", "X", "L", "C", "D", "M"];
+    // 递归辅助函数
+    function helper(num, i, str) {
+        // 边界及跳出条件
+        if (num === 0 || i < 0) {
+            return str;
+        }
+        // 暂时生成的罗马字符
+        var temp = "";
+        if (num >= numArr[i]) {
+            // 这里与上一个方法一致
+            var checkerIndex = [i + 1, i % 2 ? i - 1 : i];
+            var checkerValue = numArr[checkerIndex[0]] - numArr[checkerIndex[1]];
+            // 暂存差值
+            var tempDiff = Math.floor(num / numArr[i]) * numArr[i];
+            // 特殊情况判断。如果 num 与特殊值的第一位相同，那就证明遇到了特殊情况
+            if (num.toString()[0] === checkerValue.toString()[0]) {
+                // 直接减掉特殊值，罗马字符则为左小右大，与上一个方法思路一致
+                return str + helper(num - checkerValue, i - 1, strArr[checkerIndex[1]] + strArr[checkerIndex[0]])
+            }
+            // 如果不是特殊情况，字符重复输出 `num / numArr[i]` 次
+            temp += strArr[i].repeat(Math.floor(num / numArr[i]));
+            // 特殊情况，即连续出现三次以上相同字符
+            if (temp.length > 3) {
+                // 此时字符串应取最后一位，并把后一个元素加进来
+                return helper(num - tempDiff, i - 1, str + temp.slice(-1) + strArr[i + 1]);
+            } else {
+                return helper(num - tempDiff, i - 1, str + temp);
+            }
+        } else {
+            // 否则，当前元素太大，索引减一继续判断，str 不变
+            return helper(num, i - 1, str);
+        }
+    }
+    // 初始调用，字符串为 0，从 numArr 的最后一个元素开始判断
+    return helper(num, numArr.length - 1, "");
+}
+    </pre>
+    <h1></h1>
+    <pre>
+
+    </pre>
+    <a href="http://singsing.io/blog/fcc/intermediate-roman-numeral-converter/">罗马数字转换器 </a>
+</body>
+
+</html>
